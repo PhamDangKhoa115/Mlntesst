@@ -354,7 +354,7 @@ export default function HomePage() {
                 </blockquote>
                 <p className="mt-3 text-[#C08B5C]">– C. Mác</p>
               </div>
-              <div className="hidden rounded-2xl bg-white/10 p-6 text-center text-7xl md:block">
+              <div className="hidden rounded-2xl  p-6 text-center text-7xl md:block">
                 📖
               </div>
             </div>
