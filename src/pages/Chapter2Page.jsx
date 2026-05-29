@@ -79,18 +79,18 @@ export default function Chapter2Page() {
             </h2>
 
             <div className="mt-7 flex flex-col items-center justify-center gap-5 md:flex-row">
-              <div className="rounded-xl bg-[#F4E9DB] px-12 py-6 text-center font-black text-[#5A331E]">
+              <div className="rounded-xl bg-[#F4E9DB] px-12 py-6 text-center font-black text-[#5A331E] dark:bg-[#2A1A12] dark:text-white">
                 Vật chất
-                <p className="mt-1 text-sm font-semibold text-[#5A331E]/70">
+                <p className="mt-1 text-sm font-semibold text-[#5A331E]/70 dark:text-white/65">
                   quyết định ý thức
                 </p>
               </div>
 
               <ArrowRight className="text-[#8B4A22]" size={42} />
 
-              <div className="rounded-xl bg-[#F4E9DB] px-12 py-6 text-center font-black text-[#5A331E]">
+              <div className="rounded-xl bg-[#F4E9DB] px-12 py-6 text-center font-black text-[#5A331E] dark:bg-[#2A1A12] dark:text-white">
                 Ý thức
-                <p className="mt-1 text-sm font-semibold text-[#5A331E]/70">
+                <p className="mt-1 text-sm font-semibold text-[#5A331E]/70 dark:text-white/65">
                   tác động trở lại vật chất
                 </p>
               </div>
@@ -101,13 +101,15 @@ export default function Chapter2Page() {
             {dialecticPrinciples.map((item, index) => (
               <div
                 key={item.title}
-                className="rounded-2xl bg-[#F7F1E8] p-6 text-[#5A331E]"
+                className="rounded-2xl bg-[#F7F1E8] p-6 text-[#5A331E] dark:bg-[#2A1A12] dark:text-white"
               >
                 <p className="text-2xl font-black text-[#8B4A22]">
                   {index + 1}
                 </p>
                 <h3 className="mt-2 text-xl font-black">{item.title}</h3>
-                <p className="mt-3 leading-7 text-[#5A331E]/75">{item.desc}</p>
+                <p className="mt-3 leading-7 text-[#5A331E]/75 dark:text-white/70">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </section>
@@ -118,7 +120,7 @@ export default function Chapter2Page() {
               {dialecticCategories.map((category) => (
                 <div
                   key={category}
-                  className="rounded-xl border border-[#E8DCCB] bg-white px-5 py-4 font-bold text-[#5A331E] dark:border-[#3A2A22] dark:bg-[#F4E9DB]"
+                  className="rounded-xl border border-[#E8DCCB] bg-white px-5 py-4 font-bold text-[#5A331E] dark:border-[#3A2A22] dark:bg-[#2A1A12] dark:text-white"
                 >
                   {category}
                 </div>
@@ -132,11 +134,11 @@ export default function Chapter2Page() {
               {dialecticRules.map((rule) => (
                 <div
                   key={rule.title}
-                  className="rounded-2xl border border-[#E8DCCB] bg-white p-6 text-[#5A331E] dark:border-[#3A2A22] dark:bg-[#F4E9DB]"
+                  className="rounded-2xl border border-[#E8DCCB] bg-white p-6 text-[#5A331E] dark:border-[#3A2A22] dark:bg-[#2A1A12] dark:text-white"
                 >
                   <Atom className="mb-4 text-[#A97451]" size={40} />
                   <h3 className="font-black text-[#8B4A22]">{rule.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-[#5A331E]/75">
+                  <p className="mt-3 text-sm leading-7 text-[#5A331E]/75 dark:text-white/70">
                     {rule.desc}
                   </p>
                 </div>
@@ -150,11 +152,11 @@ export default function Chapter2Page() {
               {cognitionSections.map((section) => (
                 <div
                   key={section.title}
-                  className="rounded-2xl bg-[#F7F1E8] p-6"
+                  className="rounded-2xl bg-[#F7F1E8] p-6 text-[#5A331E] dark:bg-[#2A1A12] dark:text-white"
                 >
                   <Brain className="mb-4 text-[#A97451]" size={38} />
                   <h3 className="font-black text-[#8B4A22]">{section.title}</h3>
-                  <p className="mt-3 leading-7 text-[#5A331E]/75">
+                  <p className="mt-3 leading-7 text-[#5A331E]/75 dark:text-white/70">
                     {section.desc}
                   </p>
                 </div>
