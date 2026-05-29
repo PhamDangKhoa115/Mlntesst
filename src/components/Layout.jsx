@@ -2,9 +2,10 @@ import Navbar from "./Navbar";
 
 export default function Layout({ children }) {
   return (
-    <div className="min-h-screen bg-[#F7F1E8] text-[#2B1A12]">
+    <div className="min-h-screen bg-[#F8F3EA] text-[#2B1A12] dark:bg-[#120D09] dark:text-white">
       <Navbar />
-      <main className="w-full px-5 py-6 lg:px-8">{children}</main>
+
+      <main className="mx-auto max-w-7xl px-6 py-8">{children}</main>
     </div>
   );
 }

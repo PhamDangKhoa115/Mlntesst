@@ -331,41 +331,66 @@ export const cognitionSections = [
 
 export const chapter3Sections = [
   {
-    title: "Vai trò của sản xuất vật chất",
-    desc: "Sản xuất vật chất là cơ sở của đời sống xã hội. Trình độ phát triển của sản xuất vật chất quy định trình độ phát triển của các hoạt động xã hội khác.",
-  },
-  {
-    title: "Phương thức sản xuất",
-    desc: "Phương thức sản xuất là cách thức con người tiến hành sản xuất trong từng giai đoạn lịch sử. Nó gồm hai mặt: lực lượng sản xuất và quan hệ sản xuất.",
-  },
-  {
-    title: "Lực lượng sản xuất và quan hệ sản xuất",
-    desc: "Lực lượng sản xuất là tổng hợp các yếu tố vật chất và tinh thần tạo thành sức mạnh cải biến tự nhiên và xã hội. Quan hệ sản xuất là quan hệ giữa người với người trong quá trình sản xuất. Lực lượng sản xuất quyết định quan hệ sản xuất.",
-  },
-  {
-    title: "Cơ sở hạ tầng và kiến trúc thượng tầng",
-    desc: "Cơ sở hạ tầng là toàn bộ quan hệ sản xuất hợp thành cơ cấu kinh tế của xã hội. Kiến trúc thượng tầng là hệ thống quan điểm tư tưởng và thiết chế xã hội tương ứng. Cơ sở hạ tầng quyết định kiến trúc thượng tầng, nhưng kiến trúc thượng tầng cũng tác động trở lại.",
-  },
-  {
-    title: "Tồn tại xã hội và ý thức xã hội",
-    desc: "Tồn tại xã hội là phương diện sinh hoạt vật chất và điều kiện sinh hoạt vật chất của xã hội. Ý thức xã hội là phương diện sinh hoạt tinh thần phản ánh tồn tại xã hội. Tồn tại xã hội quyết định ý thức xã hội, nhưng ý thức xã hội có tính độc lập tương đối.",
-  },
-  {
     title: "Hình thái kinh tế - xã hội",
-    desc: "Hình thái kinh tế - xã hội là xã hội ở một giai đoạn lịch sử nhất định, với lực lượng sản xuất, quan hệ sản xuất và kiến trúc thượng tầng tương ứng. Sự phát triển các hình thái kinh tế - xã hội là quá trình lịch sử tự nhiên.",
+    image: "/chapter3-economic.png",
+    desc: "Lực lượng sản xuất, quan hệ sản xuất, cơ sở hạ tầng và kiến trúc thượng tầng trong mối quan hệ biện chứng.",
+    details: [
+      "Hình thái kinh tế - xã hội là xã hội ở một giai đoạn lịch sử nhất định.",
+      "Kết cấu gồm: lực lượng sản xuất, quan hệ sản xuất và kiến trúc thượng tầng.",
+      "Sự phát triển các hình thái kinh tế - xã hội là quá trình lịch sử tự nhiên.",
+    ],
   },
   {
-    title: "Giai cấp và đấu tranh giai cấp",
-    desc: "Giai cấp khác nhau về địa vị trong hệ thống sản xuất, quan hệ với tư liệu sản xuất, vai trò tổ chức lao động và cách thức hưởng thụ của cải. Đấu tranh giai cấp là động lực quan trọng của sự phát triển xã hội có giai cấp.",
+    title: "Giai cấp và dân tộc",
+    image: "/chapter3-class.png",
+    desc: "Khái niệm giai cấp, đấu tranh giai cấp và vấn đề dân tộc trong lịch sử xã hội.",
+    details: [
+      "Giai cấp khác nhau về địa vị trong hệ thống sản xuất xã hội.",
+      "Nguồn gốc trực tiếp của giai cấp là chế độ chiếm hữu tư nhân về tư liệu sản xuất.",
+      "Đấu tranh giai cấp là động lực quan trọng của xã hội có giai cấp.",
+    ],
   },
   {
-    title: "Cách mạng xã hội",
-    desc: "Cách mạng xã hội là sự biến đổi có tính bước ngoặt, căn bản về chất trong đời sống xã hội. Nguyên nhân sâu xa là mâu thuẫn gay gắt giữa lực lượng sản xuất và quan hệ sản xuất.",
+    title: "Nhà nước và cách mạng",
+    image: "/chapter3-state.png",
+    desc: "Nguồn gốc, bản chất của nhà nước và vai trò của cách mạng xã hội trong phát triển.",
+    details: [
+      "Cách mạng xã hội là sự biến đổi có tính bước ngoặt và căn bản về chất.",
+      "Nguyên nhân sâu xa là mâu thuẫn giữa lực lượng sản xuất và quan hệ sản xuất.",
+      "Cách mạng xã hội là một phương thức, động lực của sự phát triển xã hội.",
+    ],
   },
   {
-    title: "Con người và quần chúng nhân dân",
-    desc: "Con người là thực thể tự nhiên đã được xã hội hóa. Theo Marx, bản chất con người là tổng hòa các quan hệ xã hội. Quần chúng nhân dân là chủ thể sáng tạo ra lịch sử.",
+    title: "Ý thức xã hội",
+    image: "/chapter3-consciousness.png",
+    desc: "Bản chất, kết cấu và các hình thái ý thức xã hội; quan hệ giữa tồn tại xã hội và ý thức xã hội.",
+    details: [
+      "Tồn tại xã hội quyết định ý thức xã hội.",
+      "Ý thức xã hội có tính độc lập tương đối.",
+      "Ý thức xã hội có thể lạc hậu hoặc vượt trước tồn tại xã hội.",
+    ],
   },
+  {
+    title: "Triết học về con người",
+    image: "/chapter3-human.png",
+    desc: "Bản chất con người, mối quan hệ cá nhân - xã hội và vai trò sáng tạo của quần chúng nhân dân.",
+    details: [
+      "Con người là thực thể tự nhiên đã được xã hội hóa.",
+      "Theo Mác, bản chất con người là tổng hòa các quan hệ xã hội.",
+      "Quần chúng nhân dân là chủ thể sáng tạo ra lịch sử.",
+    ],
+  },
+];
+
+export const chapter3Map = [
+  "Lực lượng sản xuất",
+  "Quan hệ sản xuất",
+  "Cơ sở hạ tầng",
+  "Kiến trúc thượng tầng",
+  "Giai cấp và dân tộc",
+  "Nhà nước và cách mạng",
+  "Ý thức xã hội",
+  "Triết học về con người",
 ];
 export const socialTheory = [
   {
