@@ -5,6 +5,7 @@ import Chapter2Page from "./pages/Chapter2Page";
 import Chapter3Page from "./pages/Chapter3Page";
 import ReviewPage from "./pages/ReviewPage";
 import PhilosophyGame from "./pages/PhilosophyGame";
+import AIAppendixPage from "./pages/AIApendixPage";
 import "./index.css";
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/chuong-3" element={<Chapter3Page />} />
         <Route path="/on-tap" element={<ReviewPage />} />
         <Route path="/game" element={<PhilosophyGame />} />
+        <Route path="/phu-luc-ai" element={<AIAppendixPage />} />
       </Routes>
     </BrowserRouter>
   );
