@@ -81,7 +81,7 @@ export default function HomePage() {
   return (
     <Layout>
       <section
-        className="overflow-hidden rounded-[2rem] p-12 text-white shadow-sm"
+        className="overflow-hidden rounded-[1.5rem] p-6 text-white shadow-sm sm:rounded-[2rem] sm:p-10 lg:p-12"
         style={{
           backgroundImage:
             "linear-gradient(90deg,rgba(37,18,8,.98),rgba(88,43,18,.82),rgba(88,43,18,.25)), url('/home-hero.png')",
@@ -93,43 +93,43 @@ export default function HomePage() {
           MLN111
         </span>
 
-        <h1 className="mt-6 text-6xl font-black leading-none tracking-tight">
+        <h1 className="mt-6 text-4xl font-black leading-none tracking-tight sm:text-5xl lg:text-6xl">
           TRIẾT HỌC
           <br />
           <span className="text-[#C97945]">MÁC - LÊNIN</span>
         </h1>
 
-        <p className="mt-6 text-2xl font-bold">
+        <p className="mt-5 text-xl font-bold sm:text-2xl">
           Tổng quan kiến thức Chương 1 + 2 + 3
         </p>
 
-        <p className="mt-5 max-w-lg leading-8 text-white/80">
+        <p className="mt-5 max-w-lg text-sm leading-7 text-white/80 sm:text-base sm:leading-8">
           Hiểu thế giới bằng tư duy biện chứng, cải tạo thế giới bằng thực tiễn
           cách mạng.
         </p>
 
-        <div className="mt-8 flex flex-wrap gap-5">
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-5">
           <Link
             to="/chuong-1"
-            className="rounded-xl bg-[#A75A2A] px-7 py-4 font-black text-white"
+            className="rounded-xl bg-[#A75A2A] px-7 py-4 text-center font-black text-white"
           >
             Bắt đầu học →
           </Link>
 
           <Link
             to="/game"
-            className="rounded-xl border border-[#D8B391] px-7 py-4 font-black text-white"
+            className="rounded-xl border border-[#D8B391] px-7 py-4 text-center font-black text-white"
           >
             Chơi game
           </Link>
         </div>
       </section>
 
-      <section className="mt-8 grid overflow-hidden rounded-[1.5rem] border border-[#E8DCCB] bg-[#FFFDF8] dark:border-[#3A2A22] dark:bg-[#21150F] md:grid-cols-6">
+      <section className="mt-8 grid overflow-hidden rounded-[1.5rem] border border-[#E8DCCB] bg-[#FFFDF8] dark:border-[#3A2A22] dark:bg-[#21150F] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         {featureCards.map(({ icon: Icon, title, desc }) => (
           <div
             key={title}
-            className="border-r border-[#E8DCCB] px-5 py-7 text-center last:border-r-0 dark:border-[#3A2A22]"
+            className="border-b border-[#E8DCCB] px-5 py-7 text-center last:border-b-0 dark:border-[#3A2A22] sm:border-r sm:last:border-r-0 lg:border-b-0"
           >
             <Icon className="mx-auto text-[#A97451]" size={42} />
             <h3 className="mt-4 font-black dark:text-white">{title}</h3>
@@ -140,17 +140,17 @@ export default function HomePage() {
         ))}
       </section>
 
-      <section className="mt-8 rounded-[1.5rem] border border-[#E8DCCB] bg-[#FFFDF8] p-8 dark:border-[#3A2A22] dark:bg-[#21150F]">
+      <section className="mt-8 rounded-[1.5rem] border border-[#E8DCCB] bg-[#FFFDF8] p-5 dark:border-[#3A2A22] dark:bg-[#21150F] sm:p-8">
         <h2 className="mb-7 text-xl font-black uppercase dark:text-white">
           Nội dung học tập
         </h2>
 
-        <div className="grid gap-5 md:grid-cols-5">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {courseCards.map(({ no, icon: Icon, title, desc, path }) => (
             <Link
               key={no}
               to={path}
-              className="rounded-xl border border-[#E8DCCB] bg-white p-6 transition hover:-translate-y-1 hover:shadow-md dark:border-[#3A2A22] dark:bg-[#2A1A12]"
+              className="rounded-xl border border-[#E8DCCB] bg-white p-5 transition hover:-translate-y-1 hover:shadow-md dark:border-[#3A2A22] dark:bg-[#2A1A12] sm:p-6"
             >
               <p className="text-2xl font-black text-[#A97451]">{no}</p>
               <h3 className="mt-5 font-black dark:text-white">{title}</h3>
@@ -168,7 +168,7 @@ export default function HomePage() {
       </section>
 
       <section
-        className="mt-8 rounded-[1.5rem] p-10 text-white"
+        className="mt-8 rounded-[1.5rem] p-6 text-white sm:p-10"
         style={{
           backgroundImage:
             "linear-gradient(90deg,rgba(91,45,20,.96),rgba(91,45,20,.65)), url('/quote-books.png')",
@@ -177,7 +177,7 @@ export default function HomePage() {
         }}
       >
         <p className="text-5xl text-[#D8B391]">“</p>
-        <p className="max-w-xl text-xl font-semibold leading-9">
+        <p className="max-w-xl text-lg font-semibold leading-8 sm:text-xl sm:leading-9">
           Triết học không chỉ giải thích thế giới, mà còn định hướng cách con
           người nhận thức và cải tạo thế giới.
         </p>

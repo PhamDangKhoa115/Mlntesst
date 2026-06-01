@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import PageHero from "../components/PageHero";
 import { chapter3Sections, chapter3Map } from "../data/mlnData";
 import { useState } from "react";
 import {
@@ -11,7 +12,7 @@ import {
   Brain,
   User,
   ArrowRight,
-  Network,
+  ArrowDown,
 } from "lucide-react";
 
 const mapIcons = [
@@ -27,61 +28,48 @@ const mapIcons = [
 
 export default function Chapter3Page() {
   const [showAllDetails, setShowAllDetails] = useState(false);
+
   return (
     <Layout>
-      <section className="relative mb-8 overflow-hidden rounded-[2rem] border border-[#E8DCCB] bg-[#FFFDF8] p-10 text-[#2B1A12] dark:border-[#3A2A22] dark:bg-[#21150F] dark:text-white">
-        <img
-          src="/chapter3-bg.png"
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover object-right opacity-70"
-        />
+      <PageHero
+        breadcrumb="Trang chủ 〉 Chương 3"
+        title="Chương 3: Chủ nghĩa duy vật lịch sử"
+        desc="Trình bày những nội dung cơ bản của chủ nghĩa duy vật lịch sử, gồm vấn đề hình thái kinh tế - xã hội; giai cấp và dân tộc; nhà nước và cách mạng; ý thức xã hội; triết học về con người."
+        image="/chapter3-bg.png"
+      />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FFFDF8] via-[#FFFDF8]/95 to-[#FFFDF8]/35 dark:from-[#21150F] dark:via-[#21150F]/92 dark:to-[#21150F]/40" />
+      <div className="mb-5 flex justify-end">
+        <button
+          onClick={() => setShowAllDetails(!showAllDetails)}
+          className="w-full rounded-xl bg-[#8B4A22] px-5 py-3 text-sm font-black text-white transition hover:bg-[#A75A2A] sm:w-auto"
+        >
+          {showAllDetails ? "Ẩn toàn bộ chi tiết ↑" : "Xem toàn bộ chi tiết →"}
+        </button>
+      </div>
 
-        <div className="relative z-10">
-          <p className="mb-6 text-sm text-[#8B4A22]">Trang chủ 〉 Chương 3</p>
-
-          <h1 className="max-w-4xl text-5xl font-black leading-tight text-[#2B1A12] dark:text-white">
-            Chương 3: Chủ nghĩa duy vật lịch sử
-          </h1>
-
-          <p className="mt-6 max-w-4xl leading-8 text-[#5A331E]/75 dark:text-white/70">
-            Trình bày những nội dung cơ bản của chủ nghĩa duy vật lịch sử, gồm
-            vấn đề hình thái kinh tế - xã hội; giai cấp và dân tộc; nhà nước và
-            cách mạng; ý thức xã hội; triết học về con người.
-          </p>
-        </div>
-      </section>
-      <section className="grid gap-5 md:grid-cols-5">
+      <section className="grid gap-5 sm:grid-cols-2 xl:grid-cols-5">
         {chapter3Sections.map((section, index) => (
           <article
             key={section.title}
-            className="rounded-2xl border border-[#E8DCCB] bg-[#FFFDF8] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-[#3A2A22] dark:bg-[#21150F]"
+            className="rounded-2xl border border-[#E8DCCB] bg-[#FFFDF8] p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-[#3A2A22] dark:bg-[#21150F] sm:p-6"
           >
-            <span className="rounded-lg bg-[#8B4A22] px-3 py-2 text-sm font-black text-white">
+            <span className="rounded-lg bg-[#8B4A22] px-3 py-2 text-xs font-black text-white sm:text-sm">
               3.{index + 1}
             </span>
 
-            <h2 className="mt-6 min-h-[82px] text-2xl font-black leading-tight text-[#2B1A12] dark:text-white">
+            <h2 className="mt-5 text-xl font-black leading-tight text-[#2B1A12] dark:text-white sm:mt-6 sm:text-2xl xl:min-h-[82px]">
               {section.title}
             </h2>
 
             <img
               src={section.image}
               alt={section.title}
-              className="mt-5 h-40 w-full rounded-xl object-cover"
+              className="mt-4 h-36 w-full rounded-xl object-cover sm:mt-5 sm:h-40"
             />
 
-            <p className="mt-5 min-h-[110px] text-sm font-semibold leading-7 text-[#5A331E]/75 dark:text-white/70">
+            <p className="mt-4 text-sm font-semibold leading-7 text-[#5A331E]/75 dark:text-white/70 xl:min-h-[110px]">
               {section.desc}
             </p>
-
-            <button
-              onClick={() => setShowAllDetails(!showAllDetails)}
-              className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg border border-[#E8DCCB] bg-white py-3 text-sm font-black text-[#8B4A22] dark:border-[#3A2A22] dark:bg-[#2A1A12]"
-            >
-              {showAllDetails ? "Ẩn chi tiết ↑" : "Xem chi tiết →"}
-            </button>
 
             {showAllDetails && (
               <ul className="mt-4 space-y-2 text-sm leading-6 text-[#5A331E]/75 dark:text-white/70">
@@ -94,28 +82,33 @@ export default function Chapter3Page() {
         ))}
       </section>
 
-      <section className="mt-8 rounded-[1.7rem] border border-[#E8DCCB] bg-[#FFFDF8] p-8 dark:border-[#3A2A22] dark:bg-[#21150F]">
-        <div className="mb-8 flex items-center justify-between">
-          <h2 className="text-2xl font-black text-[#2B1A12] dark:text-white">
-            Sơ đồ tổng quan chương 3
-          </h2>
-        </div>
+      <section className="mt-8 rounded-[1.5rem] border border-[#E8DCCB] bg-[#FFFDF8] p-5 dark:border-[#3A2A22] dark:bg-[#21150F] sm:rounded-[1.7rem] sm:p-8">
+        <h2 className="mb-6 text-2xl font-black text-[#2B1A12] dark:text-white sm:text-3xl">
+          Sơ đồ tổng quan chương 3
+        </h2>
 
-        <div className="flex flex-wrap items-center justify-center gap-5 text-center">
+        <div className="flex flex-col items-center gap-3 xl:flex-row xl:flex-wrap xl:justify-center xl:gap-5">
           {chapter3Map.map((item, index) => {
             const Icon = mapIcons[index] || Landmark;
 
             return (
-              <div key={item} className="flex items-center gap-5">
-                <div>
-                  <Icon className="mx-auto text-[#A97451]" size={48} />
-                  <p className="mt-3 max-w-[120px] text-sm font-black leading-5 text-[#2B1A12] dark:text-white">
+              <div
+                key={item}
+                className="flex w-full flex-col items-center xl:w-auto xl:flex-row xl:gap-5"
+              >
+                <div className="w-full rounded-2xl bg-[#F7F1E8] p-5 text-center dark:bg-[#2A1A12] sm:max-w-[360px] xl:w-[135px] xl:p-4">
+                  <Icon className="mx-auto text-[#A97451]" size={42} />
+
+                  <p className="mt-3 text-sm font-black leading-5 text-[#2B1A12] dark:text-white">
                     {item}
                   </p>
                 </div>
 
                 {index < chapter3Map.length - 1 && (
-                  <ArrowRight className="hidden text-[#8B4A22] md:block" />
+                  <>
+                    <ArrowDown className="my-1 text-[#8B4A22] xl:hidden" />
+                    <ArrowRight className="hidden text-[#8B4A22] xl:block" />
+                  </>
                 )}
               </div>
             );

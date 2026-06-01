@@ -126,13 +126,27 @@ const randomBetween = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
 const shuffle = (array) => [...array].sort(() => Math.random() - 0.5);
-const isTooCloseToPlayer = (x, y, player, minDistance = 150) => {
-  const dx = player.x + 20 - x;
-  const dy = player.y + 30 - y;
-  return Math.sqrt(dx * dx + dy * dy) < minDistance;
+const getDistance = (x1, y1, x2, y2) => {
+  const dx = x1 - x2;
+  const dy = y1 - y2;
+  return Math.sqrt(dx * dx + dy * dy);
 };
 
-const getSafeRandomPosition = (W, H, player) => {
+const isTooCloseToPlayer = (x, y, player, minDistance = 150) => {
+  return getDistance(player.x + 20, player.y + 30, x, y) < minDistance;
+};
+
+const isTooCloseToOtherItems = (x, y, items = [], minDistance = 120) => {
+  return items.some((item) => getDistance(x, y, item.x, item.y) < minDistance);
+};
+
+const getSafeRandomPosition = (
+  W,
+  H,
+  player,
+  avoidItems = [],
+  minItemDistance = 120,
+) => {
   let x;
   let y;
   let tries = 0;
@@ -141,7 +155,11 @@ const getSafeRandomPosition = (W, H, player) => {
     x = randomBetween(W * 0.18, W * 0.82);
     y = randomBetween(H * 0.22, H * 0.78);
     tries++;
-  } while (isTooCloseToPlayer(x, y, player) && tries < 50);
+  } while (
+    (isTooCloseToPlayer(x, y, player) ||
+      isTooCloseToOtherItems(x, y, avoidItems, minItemDistance)) &&
+    tries < 100
+  );
 
   return { x, y };
 };
@@ -157,10 +175,12 @@ const makeCollectibles = (eraIndex, canvas, amount, player) => {
   const H = canvas?.height || 600;
   const selectedItems = shuffle(ERAS[eraIndex].items).slice(0, amount);
 
-  return selectedItems.map((item, index) => {
-    const pos = getSafeRandomPosition(W, H, player);
+  const correctItems = [];
 
-    return {
+  selectedItems.forEach((item, index) => {
+    const pos = getSafeRandomPosition(W, H, player, correctItems, 120);
+
+    correctItems.push({
       id: `correct-${eraIndex}-${index}-${Date.now()}`,
       icon: item.icon,
       label: item.label,
@@ -168,27 +188,39 @@ const makeCollectibles = (eraIndex, canvas, amount, player) => {
       y: pos.y,
       taken: false,
       type: "correct",
-    };
+    });
   });
+
+  return correctItems;
 };
-const makeWrongItems = (canvas, player) => {
+const makeWrongItems = (canvas, player, avoidItems = []) => {
   const W = canvas?.width || 900;
   const H = canvas?.height || 600;
   const amount = randomBetween(2, 3);
   const selectedItems = shuffle(WRONG_ITEMS).slice(0, amount);
 
-  return selectedItems.map((item, index) => {
-    const pos = getSafeRandomPosition(W, H, player);
+  const wrongItems = [];
 
-    return {
+  selectedItems.forEach((item, index) => {
+    const pos = getSafeRandomPosition(
+      W,
+      H,
+      player,
+      [...avoidItems, ...wrongItems],
+      130,
+    );
+
+    wrongItems.push({
       id: `wrong-${index}-${Date.now()}`,
       icon: item.icon,
       label: item.label,
       x: pos.x,
       y: pos.y,
       type: "wrong",
-    };
+    });
   });
+
+  return wrongItems;
 };
 function drawWorld(
   ctx,
@@ -500,14 +532,20 @@ export default function PhilosophyGame() {
       requiredCountRef.current = nextRequired;
       setRequiredCount(nextRequired);
       setCollected(0);
-      collectiblesRef.current = makeCollectibles(
+      const correctItems = makeCollectibles(
         eraIndex,
         canvas,
         nextRequired,
         playerRef.current,
       );
 
-      wrongItemsRef.current = makeWrongItems(canvas, playerRef.current);
+      collectiblesRef.current = correctItems;
+
+      wrongItemsRef.current = makeWrongItems(
+        canvas,
+        playerRef.current,
+        correctItems,
+      );
     };
 
     const movePlayer = () => {
@@ -973,7 +1011,7 @@ export default function PhilosophyGame() {
                 Dùng phím ↑ ↓ ← → hoặc W A S D để điều khiển nhân vật. Vật phẩm
                 tri thức sẽ xuất hiện ngẫu nhiên. Mỗi màn yêu cầu số lượng cần
                 nhặt khác nhau, thu thập đủ sẽ mở màn giải thích trước khi
-                chuyển màn.
+                chuyển màn.Nhớ đừng chọn sự lười biếng nhé
               </p>
               <div className="tut-btns">
                 <button
