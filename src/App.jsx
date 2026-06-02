@@ -6,6 +6,7 @@ import Chapter3Page from "./pages/Chapter3Page";
 import ReviewPage from "./pages/ReviewPage";
 import PhilosophyGame from "./pages/PhilosophyGame";
 import AIAppendixPage from "./pages/AIApendixPage";
+import TeamPage from "./pages/TeamPage";
 import "./index.css";
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/on-tap" element={<ReviewPage />} />
         <Route path="/game" element={<PhilosophyGame />} />
         <Route path="/phu-luc-ai" element={<AIAppendixPage />} />
+        <Route path="/nhom" element={<TeamPage />} />
       </Routes>
     </BrowserRouter>
   );

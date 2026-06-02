@@ -24,6 +24,7 @@ export const navItems = [
   { label: "Chương 2", path: "/chuong-2" },
   { label: "Chương 3", path: "/chuong-3" },
   { label: "Ôn tập", path: "/on-tap" },
+  { label: "Nhóm", path: "/nhom" },
   { label: "Phụ lục AI", path: "/phu-luc-ai" },
 ];
 export const benefits = [
