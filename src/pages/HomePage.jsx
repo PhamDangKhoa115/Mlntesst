@@ -178,8 +178,8 @@ export default function HomePage() {
       >
         <p className="text-5xl text-[#D8B391]">“</p>
         <p className="max-w-xl text-lg font-semibold leading-8 sm:text-xl sm:leading-9">
-          Triết học không chỉ giải thích thế giới, mà còn định hướng cách con
-          người nhận thức và cải tạo thế giới.
+          “Các nhà triết học chỉ giải thích thế giới bằng các phương thức khác
+          nhau, vấn đề là ở chỗ thay đổi thế giới.”
         </p>
         <p className="mt-4 text-[#D8B391]">– C. Mác</p>
       </section>
