@@ -67,7 +67,7 @@ const aiSupports = [
 const tools = [
   [
     "ChatGPT",
-    "Hỗ trợ hệ thống hóa nội dung, viết code React, chỉnh giao diện và tối ưu trải nghiệm học tập.",
+    "Hỗ trợ hệ thống hóa nội dung,chỉnh sửa code, chỉnh giao diện và tối ưu trải nghiệm học tập.",
   ],
   [
     "Claude",

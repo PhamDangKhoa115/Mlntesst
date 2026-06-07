@@ -63,9 +63,9 @@ const courseCards = [
   },
   {
     no: "04",
-    icon: Brain,
-    title: "Ôn tập",
-    desc: "Trắc nghiệm và flashcard",
+    icon: ClipboardCheck,
+    title: "Thi thử MLN111",
+    desc: "Ôn tập trắc nghiệm",
     path: "/on-tap",
   },
   {
