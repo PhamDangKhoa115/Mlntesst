@@ -125,6 +125,21 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+
+      <section className="mt-8 grid overflow-hidden rounded-[1.5rem] border border-[#E8DCCB] bg-[#FFFDF8] dark:border-[#3A2A22] dark:bg-[#21150F] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        {featureCards.map(({ icon: Icon, title, desc }) => (
+          <div
+            key={title}
+            className="border-b border-[#E8DCCB] px-5 py-7 text-center last:border-b-0 dark:border-[#3A2A22] sm:border-r sm:last:border-r-0 lg:border-b-0"
+          >
+            <Icon className="mx-auto text-[#A97451]" size={42} />
+            <h3 className="mt-4 font-black dark:text-white">{title}</h3>
+            <p className="mt-2 text-xs leading-5 text-[#5A331E]/70 dark:text-white/60">
+              {desc}
+            </p>
+          </div>
+        ))}
+      </section>
       <video
         ref={videoRef}
         className="aspect-video w-full rounded-[1rem] bg-black object-cover"
@@ -141,21 +156,6 @@ export default function HomePage() {
         <source src="/videos/mln111.mp4" type="video/mp4" />
         Trình duyệt của bạn không hỗ trợ video.
       </video>
-      <section className="mt-8 grid overflow-hidden rounded-[1.5rem] border border-[#E8DCCB] bg-[#FFFDF8] dark:border-[#3A2A22] dark:bg-[#21150F] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-        {featureCards.map(({ icon: Icon, title, desc }) => (
-          <div
-            key={title}
-            className="border-b border-[#E8DCCB] px-5 py-7 text-center last:border-b-0 dark:border-[#3A2A22] sm:border-r sm:last:border-r-0 lg:border-b-0"
-          >
-            <Icon className="mx-auto text-[#A97451]" size={42} />
-            <h3 className="mt-4 font-black dark:text-white">{title}</h3>
-            <p className="mt-2 text-xs leading-5 text-[#5A331E]/70 dark:text-white/60">
-              {desc}
-            </p>
-          </div>
-        ))}
-      </section>
-
       <section className="mt-8 rounded-[1.5rem] border border-[#E8DCCB] bg-[#FFFDF8] p-5 dark:border-[#3A2A22] dark:bg-[#21150F] sm:p-8">
         <h2 className="mb-7 text-xl font-black uppercase dark:text-white">
           Nội dung học tập
