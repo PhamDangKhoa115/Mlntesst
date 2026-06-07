@@ -516,7 +516,8 @@ export default function PhilosophyGame() {
   const wrongItemsRef = useRef([]);
   const requiredCountRef = useRef(3);
   const levelCompleteRef = useRef(false);
-
+  const audioRef = useRef(null);
+  const [volume, setVolume] = useState(0.5);
   const [started, setStarted] = useState(false);
   const [eraIndex, setEraIndex] = useState(0);
   const [collected, setCollected] = useState(0);
@@ -528,9 +529,11 @@ export default function PhilosophyGame() {
   const [advisorVisible, setAdvisorVisible] = useState(true);
   const [ending, setEnding] = useState(false);
   const [badEnding, setBadEnding] = useState(false);
-
+  const [muted, setMuted] = useState(false);
   const era = ERAS[eraIndex];
-
+  const audioElement = (
+    <audio ref={audioRef} src="/music/bg-music.mp3" loop preload="auto" />
+  );
   useEffect(() => {
     const down = (event) => {
       keysRef.current[event.key.toLowerCase()] = true;
@@ -547,7 +550,16 @@ export default function PhilosophyGame() {
       window.removeEventListener("keyup", up);
     };
   }, []);
-
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = muted;
+    }
+  }, [muted]);
   useEffect(() => {
     if (!started || ending) return;
 
@@ -740,8 +752,20 @@ export default function PhilosophyGame() {
       clearTimeout(advisorTimer);
     };
   }, [eraIndex, started]);
+  useEffect(() => {
+    if (ending) {
+      console.log("PAUSED BY ENDING");
+      audioRef.current?.pause();
+    }
+  }, [ending]);
 
   const restart = () => {
+    audioRef.current?.pause();
+
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+    }
+
     playerRef.current = { x: 120, y: 260, speed: 4 };
     setEraIndex(0);
     setCollected(0);
@@ -759,338 +783,388 @@ export default function PhilosophyGame() {
   const holdDirection = (key, value) => {
     keysRef.current[key] = value;
   };
+  useEffect(() => {
+    const audio = audioRef.current;
 
+    if (!audio) return;
+
+    audio.addEventListener("play", () => {
+      console.log("Audio started");
+    });
+
+    audio.addEventListener("pause", () => {
+      console.log("Audio paused");
+    });
+
+    audio.addEventListener("error", (e) => {
+      console.log("Audio error", e);
+    });
+  }, []);
   if (!started) {
     return (
-      <main className="game-root flex items-center justify-center">
-        <div className="intro-bg" />
-        <section className="intro-content">
-          <div className="intro-badge">Philosophy Platformer / Chương 1</div>
-          <h1 className="intro-title">
-            THE BIRTH
-            <br />
-            <span>OF PHILOSOPHY</span>
-          </h1>
-          <p className="intro-lead">
-            Điều khiển nhân vật bằng phím mũi tên hoặc WASD. Thu thập các mảnh
-            tri thức để vượt qua từng màn và mở khóa quá trình hình thành triết
-            học.
-          </p>
+      <>
+        {audioElement}
+        <main className="game-root flex items-center justify-center">
+          <div className="intro-bg" />
+          <section className="intro-content">
+            <div className="intro-badge">Philosophy Platformer / Chương 1</div>
+            <h1 className="intro-title">
+              THE BIRTH
+              <br />
+              <span>OF PHILOSOPHY</span>
+            </h1>
+            <p className="intro-lead">
+              Điều khiển nhân vật bằng phím mũi tên hoặc WASD. Thu thập các mảnh
+              tri thức để vượt qua từng màn và mở khóa quá trình hình thành
+              triết học.
+            </p>
 
-          <div className="intro-cards">
-            <div className="intro-card">
-              <h3>🎮 Điều khiển</h3>
-              <p>
-                Dùng ↑ ↓ ← → hoặc W A S D để di chuyển nhân vật trong thế giới
-                2D.
-              </p>
+            <div className="intro-cards">
+              <div className="intro-card">
+                <h3>🎮 Điều khiển</h3>
+                <p>
+                  Dùng ↑ ↓ ← → hoặc W A S D để di chuyển nhân vật trong thế giới
+                  2D.
+                </p>
+              </div>
+              <div className="intro-card">
+                <h3>✨ Nhiệm vụ</h3>
+                <p>
+                  Mỗi màn có những vật phẩm tri thức. Thu thập đủ để sang màn
+                  tiếp theo.
+                </p>
+              </div>
+              <div className="intro-card">
+                <h3>🏛️ Mục tiêu</h3>
+                <p>
+                  Đi từ thần thoại, quan sát tự nhiên, lý tính, đối thoại đến
+                  triết học.
+                </p>
+              </div>
             </div>
-            <div className="intro-card">
-              <h3>✨ Nhiệm vụ</h3>
-              <p>
-                Mỗi màn có những vật phẩm tri thức. Thu thập đủ để sang màn tiếp
-                theo.
-              </p>
-            </div>
-            <div className="intro-card">
-              <h3>🏛️ Mục tiêu</h3>
-              <p>
-                Đi từ thần thoại, quan sát tự nhiên, lý tính, đối thoại đến
-                triết học.
-              </p>
-            </div>
-          </div>
 
-          <p className="intro-quote">
-            <em>
-              “Triết học bắt đầu khi con người không chỉ tin, mà còn biết đặt
-              câu hỏi.”
-            </em>
-          </p>
+            <p className="intro-quote">
+              <em>
+                “Triết học bắt đầu khi con người không chỉ tin, mà còn biết đặt
+                câu hỏi.”
+              </em>
+            </p>
 
-          <div className="intro-btns">
-            <button
-              className="btn btn-primary"
-              onClick={() => setStarted(true)}
-            >
-              ▶ Bắt đầu Game
-            </button>
-            <a href="/" className="btn btn-secondary">
-              ← Về trang chính
-            </a>
-          </div>
-        </section>
-      </main>
+            <div className="intro-btns">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  console.log("audioRef:", audioRef.current);
+
+                  audioRef.current
+                    ?.play()
+                    .then(() => console.log("PLAYING"))
+                    .catch((e) => console.error("PLAY ERROR:", e));
+
+                  setStarted(true);
+                }}
+              >
+                ▶ Bắt đầu Game
+              </button>
+              <a href="/" className="btn btn-secondary">
+                ← Về trang chính
+              </a>
+            </div>
+          </section>
+        </main>
+      </>
     );
   }
 
   if (ending) {
     return (
-      <main className="screen-ending">
-        <div className="ending-box">
-          <div className="big-emoji">🏛️</div>
-          <h1>
-            {badEnding ? "Hành trình tạm dừng" : "Triết học đã hình thành"}
-          </h1>
-          <p>
-            {badEnding
-              ? "Sao bạn lại bỏ cuộc sớm vạyy"
-              : " Bạn đã vượt qua các màn tư duy: thần thoại, quan sát tự nhiên, lý tính, đối thoại và hệ thống hóa tri thức."}
-          </p>
-          <div className="ending-lesson">
-            <strong>{badEnding ? "Karl Marx:" : "Bài học:"}</strong>
-            <span>
+      <>
+        {audioElement}
+        <main className="screen-ending">
+          <div className="ending-box">
+            <div className="big-emoji">🏛️</div>
+            <h1>
+              {badEnding ? "Hành trình tạm dừng" : "Triết học đã hình thành"}
+            </h1>
+            <p>
               {badEnding
-                ? "Đối với khoa học, không có con đường nào bằng phẳng... chỉ có những người không sợ chồn chân mỏi gối mới có hy vọng đạt tới đỉnh cao."
-                : "Triết học Mác – Lênin hình thành khi lý luận khoa học gắn liền với thực tiễn lịch sử và phong trào cách mạng."}
-            </span>
-          </div>
-          <div className="ending-btns">
-            <button onClick={restart} className="btn btn-primary">
-              Chơi lại
-            </button>
-            <a href="/" className="btn btn-secondary">
-              Về trang chính
-            </a>
-          </div>
-        </div>
-      </main>
-    );
-  }
-
-  return (
-    <main className="game-root">
-      {phaseBanner && (
-        <div className="phase-banner">
-          <div className="pb-icon">
-            {eraIndex === 0
-              ? "🔥"
-              : eraIndex === 1
-                ? "🌊"
-                : eraIndex === 2
-                  ? "🧠"
-                  : eraIndex === 3
-                    ? "💬"
-                    : "🏛️"}
-          </div>
-          <div className="pb-right">
-            <h3>
-              {era.badge}: {era.name}
-            </h3>
-            <p>{era.quote}</p>
-            <div className="pb-mechanics">
-              Thu thập đủ {requiredCount} mảnh tri thức để vượt màn
+                ? "Bạn đã chạm phải những quan niệm sai lầm và bị lạc lối trên con đường tư duy."
+                : " Bạn đã vượt qua các màn tư duy: thần thoại, quan sát tự nhiên, lý tính, đối thoại và hệ thống hóa tri thức."}
+            </p>
+            <div className="ending-lesson">
+              <strong>{badEnding ? "Karl Marx:" : "Bài học:"}</strong>
+              <span>
+                {badEnding
+                  ? "Trong khoa học không có con đường nào bằng phẳng, và chỉ có những ai không sợ chồn chân mỏi gối leo lên những con đường nhỏ bé gập ghềnh của nó mới có hy vọng đạt tới đỉnh cao xán lạn.."
+                  : "Triết học Mác – Lênin hình thành khi lý luận khoa học gắn liền với thực tiễn lịch sử và phong trào cách mạng."}
+              </span>
             </div>
-          </div>
-        </div>
-      )}
-
-      <header className="hud">
-        <div className="hud-left">
-          <div className="phase-container">
-            <span className="phase-badge">{era.badge}</span>
-            <h2 className="phase-name">{era.name}</h2>
-          </div>
-        </div>
-
-        <div className="hud-center">
-          <div className="dash-center">
-            <div className="obj-tracker">
-              <span className="obj-label">Nhiệm vụ</span>
-              <span className="obj-text">{era.goal}</span>
-              <div className="obj-progress-bg">
-                <div
-                  className="obj-progress-fill"
-                  style={{ width: `${(collected / requiredCount) * 100}%` }}
-                />
-              </div>
-            </div>
-            <div className="main-stats">
-              <div className="stat-box">
-                <span className="label">⏳ Năm</span>
-                <span className="value">{era.year}</span>
-              </div>
-              <div className="stat-divider" />
-              <div className="stat-box">
-                <span className="label">✨ Đã nhặt</span>
-                <span className="value">
-                  {collected}/{requiredCount}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="hud-right">
-          <button
-            className="btn-icon-only"
-            onClick={() => setTutorialOpen(true)}
-          >
-            ?
-          </button>
-          <button className="btn-icon-only" onClick={restart}>
-            ☰
-          </button>
-        </div>
-      </header>
-
-      <div className="game-layout">
-        <aside className="sidebar sidebar-left">
-          <div className="panel-header">🧭 CÁC MÀN</div>
-          <div className="timeline-list">
-            {ERAS.map((item, index) => (
-              <div
-                key={item.name}
-                className={`timeline-item ${index === eraIndex ? "active" : ""} ${index < eraIndex ? "done" : ""}`}
-              >
-                <span>{item.badge}</span>
-                <strong>{item.name}</strong>
-              </div>
-            ))}
-          </div>
-
-          <div className="theory-spotlight story-spotlight">
-            <div className="spotlight-title">🔥 Tư tưởng chính</div>
-            <div id="fact-text">{era.quote}</div>
-          </div>
-        </aside>
-
-        <main className="world-container">
-          <canvas ref={canvasRef} id="gameCanvas" />
-          {advisorVisible && (
-            <div className="advisor-box">
-              <div className="advisor-avatar">🐱</div>
-              <div className="advisor-content">
-                <div className="advisor-title">Cố vấn Triết học</div>
-                <p>
-                  Dùng phím mũi tên hoặc WASD để di chuyển. Mỗi màn sẽ yêu cầu
-                  số lượng vật phẩm ngẫu nhiên.
-                </p>
-              </div>
-            </div>
-          )}
-
-          <div className="mobile-controls">
-            <button
-              onPointerDown={() => holdDirection("arrowup", true)}
-              onPointerUp={() => holdDirection("arrowup", false)}
-            >
-              ↑
-            </button>
-            <div>
-              <button
-                onPointerDown={() => holdDirection("arrowleft", true)}
-                onPointerUp={() => holdDirection("arrowleft", false)}
-              >
-                ←
+            <div className="ending-btns">
+              <button onClick={restart} className="btn btn-primary">
+                Chơi lại
               </button>
-              <button
-                onPointerDown={() => holdDirection("arrowdown", true)}
-                onPointerUp={() => holdDirection("arrowdown", false)}
-              >
-                ↓
-              </button>
-              <button
-                onPointerDown={() => holdDirection("arrowright", true)}
-                onPointerUp={() => holdDirection("arrowright", false)}
-              >
-                →
-              </button>
+              <a href="/" className="btn btn-secondary">
+                Về trang chính
+              </a>
             </div>
           </div>
         </main>
+      </>
+    );
+  }
+  return (
+    <>
+      {audioElement}
 
-        <aside className="sidebar sidebar-right">
-          <div className="panel-header">🎮 ĐIỀU KHIỂN</div>
-
-          <div className="control-guide">
-            <div className="key-row">
-              <span>↑</span>
-              <span>Đi lên</span>
+      <main className="game-root">
+        {phaseBanner && (
+          <div className="phase-banner">
+            <div className="pb-icon">
+              {eraIndex === 0
+                ? "🔥"
+                : eraIndex === 1
+                  ? "🌊"
+                  : eraIndex === 2
+                    ? "🧠"
+                    : eraIndex === 3
+                      ? "💬"
+                      : "🏛️"}
             </div>
-            <div className="key-row">
-              <span>↓</span>
-              <span>Đi xuống</span>
-            </div>
-            <div className="key-row">
-              <span>←</span>
-              <span>Đi trái</span>
-            </div>
-            <div className="key-row">
-              <span>→</span>
-              <span>Đi phải</span>
-            </div>
-            <div className="key-row">
-              <span>WASD</span>
-              <span>Cũng dùng được</span>
-            </div>
-          </div>
-
-          <div className="panel-header" style={{ marginTop: "1rem" }}>
-            📜 Biên niên sử
-          </div>
-          <div className="event-log">
-            {logs.map((log, index) => (
-              <div key={index} className="log-item good">
-                {log}
+            <div className="pb-right">
+              <h3>
+                {era.badge}: {era.name}
+              </h3>
+              <p>{era.quote}</p>
+              <div className="pb-mechanics">
+                Thu thập đủ {requiredCount} mảnh tri thức để vượt màn
               </div>
-            ))}
+            </div>
           </div>
-        </aside>
-      </div>
+        )}
 
-      {tutorialOpen && (
-        <div className="tutorial-overlay">
-          <div className="tutorial-box">
-            <div className="tut-avatar">🦉</div>
-            <div className="tut-content">
-              <h3>Hướng dẫn</h3>
-              <p>
-                Dùng phím ↑ ↓ ← → hoặc W A S D để điều khiển nhân vật. Vật phẩm
-                tri thức sẽ xuất hiện ngẫu nhiên. Mỗi màn yêu cầu số lượng cần
-                nhặt khác nhau, thu thập đủ sẽ mở màn giải thích trước khi
-                chuyển màn.Nhớ đừng chọn sự lười biếng nhé
-              </p>
-              <div className="tut-btns">
-                <button
-                  className="btn btn-primary btn-sm"
-                  onClick={() => setTutorialOpen(false)}
+        <header className="hud">
+          <div className="hud-left">
+            <div className="phase-container">
+              <span className="phase-badge">{era.badge}</span>
+              <h2 className="phase-name">{era.name}</h2>
+            </div>
+          </div>
+          <div className="music-control">
+            <span>🎵</span>
+
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={volume}
+              onChange={(e) => setVolume(Number(e.target.value))}
+            />
+
+            <span>{Math.round(volume * 100)}%</span>
+          </div>
+          <button onClick={() => setMuted(!muted)} className="btn-icon-only">
+            {muted ? "🔇" : "🔊"}
+          </button>
+          <div className="hud-center">
+            <div className="dash-center">
+              <div className="obj-tracker">
+                <span className="obj-label">Nhiệm vụ</span>
+                <span className="obj-text">{era.goal}</span>
+                <div className="obj-progress-bg">
+                  <div
+                    className="obj-progress-fill"
+                    style={{ width: `${(collected / requiredCount) * 100}%` }}
+                  />
+                </div>
+              </div>
+              <div className="main-stats">
+                <div className="stat-box">
+                  <span className="label">⏳ Năm</span>
+                  <span className="value">{era.year}</span>
+                </div>
+                <div className="stat-divider" />
+                <div className="stat-box">
+                  <span className="label">✨ Đã nhặt</span>
+                  <span className="value">
+                    {collected}/{requiredCount}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="hud-right">
+            <button
+              className="btn-icon-only"
+              onClick={() => setTutorialOpen(true)}
+            >
+              ?
+            </button>
+            <button className="btn-icon-only" onClick={restart}>
+              ☰
+            </button>
+          </div>
+        </header>
+
+        <div className="game-layout">
+          <aside className="sidebar sidebar-left">
+            <div className="panel-header">🧭 CÁC MÀN</div>
+            <div className="timeline-list">
+              {ERAS.map((item, index) => (
+                <div
+                  key={item.name}
+                  className={`timeline-item ${index === eraIndex ? "active" : ""} ${index < eraIndex ? "done" : ""}`}
                 >
-                  Đã hiểu
+                  <span>{item.badge}</span>
+                  <strong>{item.name}</strong>
+                </div>
+              ))}
+            </div>
+
+            <div className="theory-spotlight story-spotlight">
+              <div className="spotlight-title">🔥 Tư tưởng chính</div>
+              <div id="fact-text">{era.quote}</div>
+            </div>
+          </aside>
+
+          <main className="world-container">
+            <canvas ref={canvasRef} id="gameCanvas" />
+            {advisorVisible && (
+              <div className="advisor-box">
+                <div className="advisor-avatar">🐱</div>
+                <div className="advisor-content">
+                  <div className="advisor-title">Cố vấn Triết học</div>
+                  <p>
+                    Dùng phím mũi tên hoặc WASD để di chuyển. Mỗi màn sẽ yêu cầu
+                    số lượng vật phẩm ngẫu nhiên.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <div className="mobile-controls">
+              <button
+                onPointerDown={() => holdDirection("arrowup", true)}
+                onPointerUp={() => holdDirection("arrowup", false)}
+              >
+                ↑
+              </button>
+              <div>
+                <button
+                  onPointerDown={() => holdDirection("arrowleft", true)}
+                  onPointerUp={() => holdDirection("arrowleft", false)}
+                >
+                  ←
+                </button>
+                <button
+                  onPointerDown={() => holdDirection("arrowdown", true)}
+                  onPointerUp={() => holdDirection("arrowdown", false)}
+                >
+                  ↓
+                </button>
+                <button
+                  onPointerDown={() => holdDirection("arrowright", true)}
+                  onPointerUp={() => holdDirection("arrowright", false)}
+                >
+                  →
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </main>
 
-      {transitionModal && (
-        <div className="level-transition-overlay">
-          <div className="level-transition-box">
-            <div className="big-emoji">🚪</div>
-            <p className="level-label">Chuyển màn</p>
-            <h2>
-              {transitionModal.currentEra} → {transitionModal.nextEra}
-            </h2>
-            <p>{transitionModal.reason}</p>
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                setTransitionModal(null);
-                if (eraIndex >= ERAS.length - 1) {
-                  setBadEnding(false);
-                  setEnding(true);
-                } else {
-                  playerRef.current = { x: 120, y: 260, speed: 4 };
-                  setEraIndex((prev) => prev + 1);
-                }
-              }}
-            >
-              Tiếp tục
-            </button>
-          </div>
+          <aside className="sidebar sidebar-right">
+            <div className="panel-header">🎮 ĐIỀU KHIỂN</div>
+
+            <div className="control-guide">
+              <div className="key-row">
+                <span>↑</span>
+                <span>Đi lên</span>
+              </div>
+              <div className="key-row">
+                <span>↓</span>
+                <span>Đi xuống</span>
+              </div>
+              <div className="key-row">
+                <span>←</span>
+                <span>Đi trái</span>
+              </div>
+              <div className="key-row">
+                <span>→</span>
+                <span>Đi phải</span>
+              </div>
+              <div className="key-row">
+                <span>WASD</span>
+                <span>Cũng dùng được</span>
+              </div>
+            </div>
+
+            <div className="panel-header" style={{ marginTop: "1rem" }}>
+              📜 Biên niên sử
+            </div>
+            <div className="event-log">
+              {logs.map((log, index) => (
+                <div key={index} className="log-item good">
+                  {log}
+                </div>
+              ))}
+            </div>
+          </aside>
         </div>
-      )}
-    </main>
+
+        {tutorialOpen && (
+          <div className="tutorial-overlay">
+            <div className="tutorial-box">
+              <div className="tut-avatar">🦉</div>
+              <div className="tut-content">
+                <h3>Hướng dẫn</h3>
+                <p>
+                  Dùng phím ↑ ↓ ← → hoặc W A S D để điều khiển nhân vật. Vật
+                  phẩm tri thức sẽ xuất hiện ngẫu nhiên. Mỗi màn yêu cầu số
+                  lượng cần nhặt khác nhau, thu thập đủ sẽ mở màn giải thích
+                  trước khi chuyển màn.Nhớ đừng chọn sự lười biếng nhé
+                </p>
+                <div className="tut-btns">
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => setTutorialOpen(false)}
+                  >
+                    Đã hiểu
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {transitionModal && (
+          <div className="level-transition-overlay">
+            <div className="level-transition-box">
+              <div className="big-emoji">🚪</div>
+              <p className="level-label">Chuyển màn</p>
+              <h2>
+                {transitionModal.currentEra} → {transitionModal.nextEra}
+              </h2>
+              <p>{transitionModal.reason}</p>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  setTransitionModal(null);
+                  if (eraIndex >= ERAS.length - 1) {
+                    setBadEnding(false);
+                    setEnding(true);
+                  } else {
+                    playerRef.current = { x: 120, y: 260, speed: 4 };
+                    setEraIndex((prev) => prev + 1);
+                  }
+                }}
+              >
+                Tiếp tục
+              </button>
+            </div>
+          </div>
+        )}
+      </main>
+    </>
   );
 }

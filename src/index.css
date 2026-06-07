@@ -1168,3 +1168,18 @@ a {
     text-align: center;
   }
 }
+.music-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: rgba(0, 0, 0, 0.5);
+  padding: 8px 12px;
+  border-radius: 12px;
+
+  color: white;
+}
+
+.music-control input {
+  width: 120px;
+}
