@@ -9,7 +9,7 @@ import {
   Scale,
   ArrowRight,
 } from "lucide-react";
-
+import { useRef } from "react";
 const featureCards = [
   {
     icon: BookOpen,
@@ -78,6 +78,7 @@ const courseCards = [
 ];
 
 export default function HomePage() {
+  const videoRef = useRef(null);
   return (
     <Layout>
       <section
@@ -124,7 +125,22 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-
+      <video
+        ref={videoRef}
+        className="aspect-video w-full rounded-[1rem] bg-black object-cover"
+        controls
+        preload="metadata"
+        playsInline
+        onLoadedMetadata={() => {
+          if (videoRef.current) {
+            videoRef.current.muted = false;
+            videoRef.current.volume = 1;
+          }
+        }}
+      >
+        <source src="/videos/mln111.mp4" type="video/mp4" />
+        Trình duyệt của bạn không hỗ trợ video.
+      </video>
       <section className="mt-8 grid overflow-hidden rounded-[1.5rem] border border-[#E8DCCB] bg-[#FFFDF8] dark:border-[#3A2A22] dark:bg-[#21150F] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         {featureCards.map(({ icon: Icon, title, desc }) => (
           <div

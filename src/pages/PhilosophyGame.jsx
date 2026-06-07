@@ -517,6 +517,7 @@ export default function PhilosophyGame() {
   const requiredCountRef = useRef(3);
   const levelCompleteRef = useRef(false);
   const audioRef = useRef(null);
+  const loseAudioRef = useRef(null);
   const [volume, setVolume] = useState(0.5);
   const [started, setStarted] = useState(false);
   const [eraIndex, setEraIndex] = useState(0);
@@ -533,6 +534,9 @@ export default function PhilosophyGame() {
   const era = ERAS[eraIndex];
   const audioElement = (
     <audio ref={audioRef} src="/music/bg-music.mp3" loop preload="auto" />
+  );
+  const loseAudioElement = (
+    <audio ref={loseAudioRef} src="/music/Lose.mp3" preload="auto" />
   );
   useEffect(() => {
     const down = (event) => {
@@ -560,6 +564,11 @@ export default function PhilosophyGame() {
       audioRef.current.muted = muted;
     }
   }, [muted]);
+  useEffect(() => {
+    if (loseAudioRef.current) {
+      loseAudioRef.current.volume = 0.5;
+    }
+  }, []);
   useEffect(() => {
     if (!started || ending) return;
 
@@ -626,6 +635,13 @@ export default function PhilosophyGame() {
       });
 
       if (touchedWrongItem && !levelCompleteRef.current) {
+        audioRef.current?.pause();
+
+        if (loseAudioRef.current) {
+          loseAudioRef.current.volume = 0.15;
+          loseAudioRef.current.currentTime = 0;
+          loseAudioRef.current.play().catch(console.error);
+        }
         levelCompleteRef.current = true;
         setLogs((prev) =>
           [
@@ -760,7 +776,10 @@ export default function PhilosophyGame() {
 
   const restart = () => {
     audioRef.current?.pause();
-
+    loseAudioRef.current?.pause();
+    if (loseAudioRef.current) {
+      loseAudioRef.current.currentTime = 0;
+    }
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
     }
@@ -787,6 +806,7 @@ export default function PhilosophyGame() {
     return (
       <>
         {audioElement}
+        {loseAudioElement}
         <main className="game-root flex items-center justify-center">
           <div className="intro-bg" />
           <section className="intro-content">
@@ -861,6 +881,7 @@ export default function PhilosophyGame() {
     return (
       <>
         {audioElement}
+        {loseAudioElement}
         <main className="screen-ending">
           <div className="ending-box">
             <div className="big-emoji">🏛️</div>
@@ -896,7 +917,7 @@ export default function PhilosophyGame() {
   return (
     <>
       {audioElement}
-
+      {loseAudioElement}
       <main className="game-root">
         {phaseBanner && (
           <div className="phase-banner">
