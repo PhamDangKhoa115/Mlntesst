@@ -190,44 +190,44 @@ const makeCollectibles = (eraIndex, canvas, amount, player) => {
 const WRONG_ITEMS_BY_ERA = [
   // Giai đoạn 1
   [
-    { icon: "❌", label: "Mâu thuẫn tư tưởng thuần túy" },
-    { icon: "❌", label: "Phát triển do ý chí cá nhân" },
-    { icon: "❌", label: "Chỉ do thiên tài Marx tạo ra" },
+    { icon: "💭", label: "Mâu thuẫn tư tưởng thuần túy" },
+    { icon: "🧠", label: "Phát triển do ý chí cá nhân" },
+    { icon: "👤", label: "Chỉ do thiên tài Marx tạo ra" },
   ],
 
   // Giai đoạn 2
   [
-    { icon: "❌", label: "Chủ nghĩa duy tâm Đức" },
-    { icon: "❌", label: "Kinh tế học cổ điển Pháp" },
-    { icon: "❌", label: "CNXH không tưởng Anh" },
+    { icon: "🌀", label: "Chủ nghĩa duy tâm Đức" },
+    { icon: "📉", label: "Kinh tế học cổ điển Pháp" },
+    { icon: "🏭", label: "CNXH không tưởng Anh" },
   ],
 
   // Giai đoạn 3
   [
-    { icon: "❌", label: "Thuyết nguyên tử cổ đại" },
-    { icon: "❌", label: "Cơ học Newton tuyệt đối hóa" },
-    { icon: "❌", label: "Sinh học trước Darwin" },
+    { icon: "⚛️", label: "Thuyết nguyên tử cổ đại" },
+    { icon: "⚙️", label: "Cơ học Newton tuyệt đối hóa" },
+    { icon: "🦠", label: "Sinh học trước Darwin" },
   ],
 
   // Giai đoạn 4
   [
-    { icon: "❌", label: "Marx và Engels chỉ là nhà kinh tế" },
-    { icon: "❌", label: "Tách rời lý luận khỏi thực tiễn" },
-    { icon: "❌", label: "Phong trào công nhân tự phát hoàn toàn" },
+    { icon: "💼", label: "Marx và Engels chỉ là nhà kinh tế" },
+    { icon: "📚", label: "Tách rời lý luận khỏi thực tiễn" },
+    { icon: "👥", label: "Phong trào công nhân tự phát hoàn toàn" },
   ],
 
   // Giai đoạn 5
   [
-    { icon: "❌", label: "Triết học Mác hoàn chỉnh ngay từ đầu" },
-    { icon: "❌", label: "Không gắn với thực tiễn cách mạng" },
-    { icon: "❌", label: "Chỉ phát triển trong giai đoạn 1841–1844" },
+    { icon: "🏛️", label: "Triết học Mác hoàn chỉnh ngay từ đầu" },
+    { icon: "🔒", label: "Không gắn với thực tiễn cách mạng" },
+    { icon: "⏳", label: "Chỉ phát triển trong giai đoạn 1841–1844" },
   ],
 
   // Giai đoạn 6
   [
-    { icon: "❌", label: "Lenin chỉ lặp lại Marx" },
-    { icon: "❌", label: "Không liên quan chủ nghĩa đế quốc" },
-    { icon: "❌", label: "Phủ nhận phép biện chứng duy vật" },
+    { icon: "🔁", label: "Lenin chỉ lặp lại Marx" },
+    { icon: "🌍", label: "Không liên quan chủ nghĩa đế quốc" },
+    { icon: "🚫", label: "Phủ nhận phép biện chứng duy vật" },
   ],
 ];
 const makeWrongItems = (eraIndex, canvas, player, avoidItems = []) => {
