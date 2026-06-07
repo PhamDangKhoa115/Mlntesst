@@ -754,7 +754,6 @@ export default function PhilosophyGame() {
   }, [eraIndex, started]);
   useEffect(() => {
     if (ending) {
-      console.log("PAUSED BY ENDING");
       audioRef.current?.pause();
     }
   }, [ending]);
@@ -783,23 +782,7 @@ export default function PhilosophyGame() {
   const holdDirection = (key, value) => {
     keysRef.current[key] = value;
   };
-  useEffect(() => {
-    const audio = audioRef.current;
 
-    if (!audio) return;
-
-    audio.addEventListener("play", () => {
-      console.log("Audio started");
-    });
-
-    audio.addEventListener("pause", () => {
-      console.log("Audio paused");
-    });
-
-    audio.addEventListener("error", (e) => {
-      console.log("Audio error", e);
-    });
-  }, []);
   if (!started) {
     return (
       <>
@@ -854,8 +837,6 @@ export default function PhilosophyGame() {
               <button
                 className="btn btn-primary"
                 onClick={() => {
-                  console.log("audioRef:", audioRef.current);
-
                   audioRef.current
                     ?.play()
                     .then(() => console.log("PLAYING"))
